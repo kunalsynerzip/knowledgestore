@@ -6,12 +6,4 @@
 .sass-cache
 .settings
 .idea
-bin
-build
 components
-dist
-node_modules
-npm-debug.log
-out
-test_results.xml
-app/apple-config.json
