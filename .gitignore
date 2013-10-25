@@ -1,5 +1,12 @@
 node_modules
+app/bower_components
+.*.sw*
+.classpath
+.gradle
+.project
+.settings
+.idea
 dist
 .tmp
 .sass-cache
-app/bower_components
+.css
