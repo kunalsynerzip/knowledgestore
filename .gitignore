@@ -1,10 +1,5 @@
-*~
-.*.sw*
-.classpath
-.gradle
-.project
+node_modules
+dist
+.tmp
 .sass-cache
-.settings
-.idea
-components
-npm-debug.log
+app/bower_components

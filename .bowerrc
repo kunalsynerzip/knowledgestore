@@ -1,4 +1,3 @@
 {
-    "directory": "app/components",
-    "shorthand_resolver": "git@10.8.129.25:{{{ organization }}}/{{{ package }}}.git"
+    "directory": "app/bower_components"
 }
