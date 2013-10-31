@@ -1,5 +1,155 @@
-<div class="hero-unit">
-  <h1>KinoEdu</h1>
-  <p>{{welcome}}</p>
-  <h3>Enjoy Learning!</h3>
+<div class='banner'>
+    <div class='container'>
+        <div class = "navbar navbar-inverse navbar-fixed-top">
+            <div class = "container">
+
+                <a ng-href src="/" class = "navbar-brand">KinoEdu</a>
+
+                <button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
+                    <span class = "icon-bar"></span>
+                    <span class = "icon-bar"></span>
+                    <span class = "icon-bar"></span>
+                </button>
+
+                <div class = "collapse navbar-collapse navHeaderCollapse">
+
+                    <ul class = "nav navbar-nav navbar-right">
+
+                        <li class = "active"><a href = "#">Courses</a></li>
+                        <li><a href = "#">Blog</a></li>
+                        <!--<li class = "dropdown">
+
+                            <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Social Media <b class = "caret"></b></a>
+                            <ul class = "dropdown-menu">
+                                <li><a href = "#">Twitter</a></li>
+                                <li><a href = "#">Facebook</a></li>
+                                <li><a href = "#">Google+</a></li>
+                                <li><a href = "#">Instagram</a></li>
+                            </ul>
+
+                        </li>-->
+                        <li><a href = "#login" ng-href src="/users/logIn" data-toggle="modal">Login</a></li>
+                        <li><a href = "#">Contact Us</a></li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container main-frame" ng-app="TVPremieresApp" ng-controller="MainController" ng-init="init()">
+    <div class="search-box form-inline">
+        <label for="filter">Filter: </label>
+        <input name="filter" id="filter" class="input-sm" type="text" ng-model="filterText"/>
+        <label>Genre: </label>
+        <select ng-model="genreFilter" ng-options="label for label in availableGenres">
+            <option value="">All</option>
+        </select>
+        <label>Order by: </label>
+        <select ng-model="orderField" ng-options="label for label in orderFields" class="input-medium"></select>
+        <select ng-model="orderReverse"class="input-medium">
+            <option value="true">Descending</option>
+            <option value="false">Ascending</option>
+        </select>
+    </div>
+    <div class="results-top"></div>
+    <div class="results-container">
+        <ul class="episode-list">
+            <li ng-repeat="tvshow in results | filter: filterText | filter: genreFilter | isGenre:genreFilter | orderBy:customOrder:orderReverse">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                        <img class="img-responsive" src="{{tvshow.episode.images.screen}}" />
+                        <div class="ratings">
+                            <strong>Ratings:</strong>
+                            <span class="label"><i class="icon-thumbs-up"></i> {{tvshow.episode.ratings.loved}}</span>
+                            <span class="label"><i class="icon-thumbs-down"></i> {{tvshow.episode.ratings.hated}}</span>
+                            <span class="label label-important" ng-class="{'label-success': tvshow.episode.ratings.percentage >= 50}"><strong>%</strong> {{tvshow.episode.ratings.percentage}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                        <h3>{{tvshow.show.title}}: {{tvshow.episode.title}}</h3>
+                        <p>{{tvshow.episode.overview}}</p>
+                    </div>
+                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                        <div class="fulldate pull-right label label-info">{{tvshow.date}}</div>
+
+                        <ul class="show-info">
+                            <li><strong>On Air:</strong> {{tvshow.show.air_day}} {{tvshow.show.air_time}}</li>
+                            <li><strong>Network:</strong> {{tvshow.show.network}}</li>
+                            <li><strong>Season #:</strong> {{tvshow.episode.season}}</li>
+                            <li><strong>Genres:</strong><span class="label label-default genre" ng-repeat="genre in tvshow.show.genres" ng-click="setGenreFilter(genre)">{{genre}}</span></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="results-bottom"></div>
+</div>
+<div class = "navbar navbar-inverse navbar-fixed-bottom">
+
+    <div class = "container">
+        <p class = "navbar-text pull-left">Site Built By <a href="http://synerzip.com">SYNERZIP</a></p>
+        <a href = "http://synerzip.com/contact-us/" class = "navbar-btn btn-danger btn pull-right">Contact Us</a>
+    </div>
+
+</div>
+<div class = "modal fade" id = "login" role = "dialog">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h4>Welcome!!!</h4>
+            </div>
+            <div class = "modal-body">
+                <div class="row">
+                    <div class="col-lg-8 col-sm-8 col-xs-8 form-horizontal" style="border-right: 1px solid #000000;">
+                        <h4>Sign-up</h4>
+                        <div class="form-group">
+                            <label for="inputName" class="col-lg-3 col-sm-3 col-xs-1 control-label">Name</label>
+                            <div class="col-lg-9 col-sm-9 col-xs-1">
+                                <input type="text" class="form-control" id="inputName" placeholder="Full Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-3 col-sm-3 col-xs-1 control-label">Email</label>
+                            <div class="col-lg-9 col-sm-9 col-xs-1">
+                                <input type="email" class="form-control" id="inputEmail1" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-lg-3 col-sm-3 col-xs-1  control-label">Password</label>
+                            <div class="col-lg-9 col-sm-9 col-xs-1">
+                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                            </div>
+                        </div>
+                        <a class = "btn btn-primary" data-dismiss = "modal">Sign-up</a>
+                    </div>
+
+                    <div class="col-lg-4 col-sm-4 col-xs-4 form-horizontal">
+                        <h4>Login</h4>
+                        <div class="form-group">
+
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <input type="email" class="form-control" id="inputLogEmail" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <input type="password" class="form-control" id="inputLogPassword" placeholder="Password">
+                            </div>
+                        </div>
+                        <a class = "btn btn-primary" data-dismiss = "modal">Login</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "modal-footer clearfix">
+
+            </div>
+        </div>
+    </div>
 </div>
