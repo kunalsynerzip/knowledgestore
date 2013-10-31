@@ -1,7 +1,17 @@
 'use strict';
 
 angular.module('kinoeduApp')
-    .controller("MainController", function($scope, $http){
+    .controller("AppController",function($scope,$http,$route,$routeParams,$location){
+        $scope.$on(
+            "$routeChangeSuccess",
+            function( $currentRoute, $previousRoute ){
+                console.log($route.current.action)
+                $location.path($route.current.action)
+            }
+        );
+    });
+angular.module('kinoeduApp')
+    .controller("CoursesController", function($scope, $http){
 
         $scope.apiKey = "3a77627518497615f3a8661542e8ec86";
         $scope.results = [];
@@ -62,15 +72,116 @@ angular.module('kinoeduApp')
             }
         };
 
+        /**
+         * Implement the courses list functionality here and later put into $scope.init().
+         */
         $http.get("/api/courses")
-            .then(function(results){
+            .success(function(data){
                 //Success;
-                console.log("Succss: " + results.status);
+                //console.log("Success: " + data);
+                angular.forEach(data, function(value, index){
+                    //console.log("Object value is >>> " + value.title);
+                })
                 //$scope.movies = results.data;
-            }, function(results){
+            })
+            .error(function(data){
                 //error
-                console.log("Error: " + results.data + "; "
-                    + results.status);
+                console.log("Error: " + data);
             })
 
     });
+
+angular.module('kinoeduApp')
+    .controller("LoginController",function($scope,$http){
+        $scope.isSignup = true;
+        $scope.isLogin = false;
+
+        /**
+         * Signup and login form variable decelerations
+         * @param selectForm
+         */
+
+        $scope.userName;
+        $scope.userEmail;
+        $scope.password;
+        $scope.confPassword;
+        $scope.userLogEmail;
+        $scope.userLogPassword;
+
+        var loginUrl = "/api/users/logIn";
+        var signupUrl = "/api/users/signUp";
+
+        $scope.signup = function(){
+            var nameStr = $scope.userName.split(" ");
+            var firstNameStr = nameStr[0];
+            var lastNameStr = nameStr[1];
+
+            var signUpObj = {
+                firstName:firstNameStr,
+                lastName:lastNameStr,
+                email:$scope.userEmail,
+                password:$scope.password
+            }
+
+            $http.post(signupUrl,signUpObj)
+                .success(function(data, status, headers, config){
+                    console.log('Data >> ',data);
+                    console.log('Status >> ',status)
+                })
+                .error(function(data, status, headers, config){
+                    if(404 === status){
+                        console.log('Page not found!!!');
+                    }
+                })
+        }
+
+        $scope.login = function(){
+            var userEmail = $scope.userLogEmail;
+            var userPassword = $scope.userLogPassword;
+
+            var loginObj = {
+                email:$scope.userLogEmail,
+                password:$scope.userLogPassword
+            }
+
+            $http.post(loginUrl,loginObj)
+                .success(function(data, status, headers, config){
+                    console.log('Data >> ',data);
+                    console.log('Status >> ',status)
+                })
+                .error(function(data, status, headers, config){
+                    if(404 === status){
+                        console.log('Page not found!!!');
+                    }
+                })
+        }
+
+        $scope.setForm = function(selectForm){
+            if(selectForm === 'signup'){
+                $scope.isSignup = true;
+                $scope.isLogin = false;
+            } else {
+                $scope.isSignup = false;
+                $scope.isLogin = true;
+            }
+        }
+    });
+
+angular.module('kinoeduApp')
+    .controller("navbarController",function($scope, $location){
+        $scope.isActive = function (viewLocation) {
+            //console.log(viewLocation);
+            return viewLocation === $location.path();
+        };
+    });
+
+angular.module('kinoeduApp')
+    .controller("ContactController",function($scope,$http){
+
+    });
+
+angular.module('kinoeduApp')
+    .controller("BlogController",function($scope,$http){
+
+    });
+

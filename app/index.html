@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="bower_components/bootstrap-sass/dist/css/bootstrap-theme.min.css">-->
     <!-- endbuild -->
 </head>
-  <body ng-app="kinoeduApp">
+  <body ng-app="kinoeduApp" ng-controller="AppController">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -27,9 +27,58 @@
       <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
 
+    <div class='banner'>
+        <div class='container'>
+            <div class = "navbar navbar-inverse navbar-fixed-top">
+                <div class = "container">
+
+                    <a href="/" class = "navbar-brand">KinoEdu</a>
+
+                    <button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
+                        <span class = "icon-bar"></span>
+                        <span class = "icon-bar"></span>
+                        <span class = "icon-bar"></span>
+                    </button>
+
+                    <div class = "collapse navbar-collapse navHeaderCollapse" ng-controller="navbarController">
+
+                        <ul class = "nav navbar-nav navbar-right">
+
+                            <li ng-class = "{ active: isActive('/')}"><a href = "/">Courses</a></li>
+                            <li ng-class = "{ active: isActive('/blog')}"><a href = "/blog">Blog</a></li>
+                            <!--<li class = "dropdown">
+
+                                <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Social Media <b class = "caret"></b></a>
+                                <ul class = "dropdown-menu">
+                                    <li><a href = "#">Twitter</a></li>
+                                    <li><a href = "#">Facebook</a></li>
+                                    <li><a href = "#">Google+</a></li>
+                                    <li><a href = "#">Instagram</a></li>
+                                </ul>
+
+                            </li>-->
+                            <li ng-class="{ active: isActive('/login')}"><a href = "/login">Login</a></li>
+                            <li ng-class="{ active: isActive('/contact')}"><a href = "/contact">Contact Us</a></li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Add your site or application content here -->
     <div ng-view></div>
+    <!-- End of your site or application content -->
+    <div class = "navbar navbar-inverse navbar-fixed-bottom">
 
+        <div class = "container">
+            <p class = "navbar-text pull-left">Site Built By <a href="http://synerzip.com">SYNERZIP</a></p>
+            <a href = "http://synerzip.com/contact-us/" class = "navbar-btn btn-danger btn pull-right">Contact Us</a>
+        </div>
+
+    </div>
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
 
