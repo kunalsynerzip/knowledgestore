@@ -96,7 +96,6 @@ angular.module('kinoeduApp')
         ,function($scope, $http, $location, appConfig){
         $scope.isSignup = false;
         $scope.isLogin = true;
-
         /**
          * Signup and login form variable decelerations
          * @param selectForm
@@ -153,6 +152,7 @@ angular.module('kinoeduApp')
                         console.log('Page not found!!!');
                         //$scope.signUpMessage = 'user has been created successfully!';
                         $scope.signUpErrorMessage = 'user has not been created properly : ' + data;
+                    console.log('Status >> ',status)
                     }
                 })
         }
