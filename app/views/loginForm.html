@@ -3,14 +3,14 @@
         <div class="col-lg-2 col-sm-2 col-xs-4">
             <div class="radio">
                 <label>
-                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked ng-click="setForm('signup')">
-                    <h4>Sign-up</h4>
+                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked ng-click="setForm('login')">
+                    <h4>Login</h4>
                 </label>
             </div>
             <div class="radio">
                 <label>
-                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" ng-click="setForm('login')">
-                    <h4>Login</h4>
+                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"  ng-click="setForm('signup')">
+                    <h4>Sign-up</h4>
                 </label>
             </div>
         </div>
@@ -47,6 +47,8 @@
                         </div>
                     </div>
                     <button class = "btn btn-primary" ng-disabled="signUpForm.$invalid" type="submit">Sign-up</button>
+                    <span style="color:green">{{signUpMessage}}</span>
+                    <span style="color:red">{{signUpErrorMessage}}</span>
                 </fieldset>
             </form>
         </div>
@@ -70,6 +72,7 @@
                         </div>
                     </div>
                     <button class = "btn btn-primary" ng-disabled="loginForm.$invalid" type="submit">Login</button>
+                    <span style="color:red">{{loginMessage}}</span>
                 </fieldset>
             </form>
         </div>

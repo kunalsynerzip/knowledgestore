@@ -2,6 +2,7 @@
 
 angular.module('kinoeduApp', ['ngSanitize'])
     .config(function ($routeProvider,$locationProvider) {
+//    .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
@@ -28,4 +29,7 @@ angular.module('kinoeduApp', ['ngSanitize'])
                 action:"/"
             });
         $locationProvider.html5Mode(true);
-    });
+    })
+    .constant('appConfig', {'statusCodeSuccess': 0, 'statusCodeFailure': 1});
+
+

@@ -92,9 +92,10 @@ angular.module('kinoeduApp')
     });
 
 angular.module('kinoeduApp')
-    .controller("LoginController",function($scope,$http){
-        $scope.isSignup = true;
-        $scope.isLogin = false;
+    .controller("LoginController",['$scope', '$http', '$location', 'appConfig'
+        ,function($scope, $http, $location, appConfig){
+        $scope.isSignup = false;
+        $scope.isLogin = true;
 
         /**
          * Signup and login form variable decelerations
@@ -112,6 +113,9 @@ angular.module('kinoeduApp')
         var signupUrl = "/api/users/signUp";
 
         $scope.signup = function(){
+
+            console.log('in sign up');
+
             var nameStr = $scope.userName.split(" ");
             var firstNameStr = nameStr[0];
             var lastNameStr = nameStr[1];
@@ -122,15 +126,33 @@ angular.module('kinoeduApp')
                 email:$scope.userEmail,
                 password:$scope.password
             }
+            $scope.signUpErrorMessage = '';
+            $scope.signUpMessage = '';
+
 
             $http.post(signupUrl,signUpObj)
                 .success(function(data, status, headers, config){
                     console.log('Data >> ',data);
-                    console.log('Status >> ',status)
+                    console.log('Status >> ',status);
+                    if(200 === status){
+
+                     if(data.statusCode == appConfig.statusCodeSuccess){
+                         //user has been created successfully
+                         //TODO - handle it properly
+                         $scope.signUpMessage = 'user has been created successfully!';
+                     }
+                     else{
+                       //something failed :(
+                         $scope.signUpErrorMessage = 'failure : ' + data.msg
+                     }
+                    }
                 })
                 .error(function(data, status, headers, config){
+                    console.log('status >> ' + status);
                     if(404 === status){
                         console.log('Page not found!!!');
+                        //$scope.signUpMessage = 'user has been created successfully!';
+                        $scope.signUpErrorMessage = 'user has not been created properly : ' + data;
                     }
                 })
         }
@@ -148,10 +170,27 @@ angular.module('kinoeduApp')
                 .success(function(data, status, headers, config){
                     console.log('Data >> ',data);
                     console.log('Status >> ',status)
+                    if(status == 200){
+
+                        if(data.statusCode == appConfig.statusCodeSuccess){
+                            //handle successful login
+                            //redirect to home.. ??
+                            $location.path('/');
+                        }
+                        else{
+                            $scope.loginMessage = data.msg
+                        }
+
+                    }
+
                 })
                 .error(function(data, status, headers, config){
                     if(404 === status){
                         console.log('Page not found!!!');
+                    }
+                    if(status == 401){
+                      $scope.loginMessage = 'invalid email or password';
+
                     }
                 })
         }
@@ -165,7 +204,7 @@ angular.module('kinoeduApp')
                 $scope.isLogin = true;
             }
         }
-    });
+    }]);
 
 angular.module('kinoeduApp')
     .controller("navbarController",function($scope, $location){
