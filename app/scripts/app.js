@@ -29,7 +29,7 @@ angular.module('kinoeduApp', ['ngSanitize'])
                 action:"/"
             });
         $locationProvider.html5Mode(true);
-    })
-    .constant('appConfig', {'statusCodeSuccess': 0, 'statusCodeFailure': 1});
+    });
+
 
 

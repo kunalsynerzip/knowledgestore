@@ -92,8 +92,7 @@ angular.module('kinoeduApp')
     });
 
 angular.module('kinoeduApp')
-    .controller("LoginController",['$scope', '$http', '$location', 'appConfig'
-        ,function($scope, $http, $location, appConfig){
+    .controller("LoginController", function($scope, $http, $location){
         $scope.isSignup = false;
         $scope.isLogin = true;
         /**
@@ -134,25 +133,33 @@ angular.module('kinoeduApp')
                     console.log('Data >> ',data);
                     console.log('Status >> ',status);
                     if(200 === status){
-
-                     if(data.statusCode == appConfig.statusCodeSuccess){
-                         //user has been created successfully
-                         //TODO - handle it properly
-                         $scope.signUpMessage = 'user has been created successfully!';
-                     }
-                     else{
-                       //something failed :(
-                         $scope.signUpErrorMessage = 'failure : ' + data.msg
-                     }
+                        //user has been created successfully
+                        //TODO - handle it properly
+                        $scope.signUpMessage = 'user has been created successfully!';
                     }
                 })
                 .error(function(data, status, headers, config){
                     console.log('status >> ' + status);
                     if(404 === status){
                         console.log('Page not found!!!');
-                        //$scope.signUpMessage = 'user has been created successfully!';
-                        $scope.signUpErrorMessage = 'user has not been created properly : ' + data;
-                    console.log('Status >> ',status)
+                    }
+                    else if (status == 400){
+                      console.log('validation failed');
+                      console.log(data);
+
+                      for (var key in data.errors){
+                        var err = data.errors[key];
+                        if(err.type){
+                            if($scope.signUpErrorMessage == ''){
+                                $scope.signUpErrorMessage = err.type;
+                            }
+                            else{
+                                $scope.signUpErrorMessage = $scope.signUpErrorMessage  + ', ' +
+                                    err.type;
+                            }
+                            console.log(err.type);
+                        }
+                      }
                     }
                 })
         }
@@ -171,16 +178,7 @@ angular.module('kinoeduApp')
                     console.log('Data >> ',data);
                     console.log('Status >> ',status)
                     if(status == 200){
-
-                        if(data.statusCode == appConfig.statusCodeSuccess){
-                            //handle successful login
-                            //redirect to home.. ??
                             $location.path('/');
-                        }
-                        else{
-                            $scope.loginMessage = data.msg
-                        }
-
                     }
 
                 })
@@ -204,7 +202,7 @@ angular.module('kinoeduApp')
                 $scope.isLogin = true;
             }
         }
-    }]);
+    });
 
 angular.module('kinoeduApp')
     .controller("navbarController",function($scope, $location){
