@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kinoeduApp', ['ngSanitize'])
+angular.module('kinoeduApp', ['ngSanitize','passwordConfirmation'])
     .config(function ($routeProvider,$locationProvider) {
 //    .config(function ($routeProvider) {
         $routeProvider

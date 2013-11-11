@@ -10,6 +10,7 @@ angular.module('kinoeduApp')
             }
         );
     });
+
 angular.module('kinoeduApp')
     .controller("CoursesController", function($scope, $http){
 
@@ -187,7 +188,7 @@ angular.module('kinoeduApp')
                         console.log('Page not found!!!');
                     }
                     if(status == 401){
-                      $scope.loginMessage = 'invalid email or password';
+                      $scope.loginMessage = 'Invalid email or password';
 
                     }
                 })

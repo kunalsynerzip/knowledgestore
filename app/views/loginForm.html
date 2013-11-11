@@ -1,6 +1,6 @@
 <div class="container main-frame">
     <div class="row">
-        <div class="col-lg-2 col-sm-2 col-xs-4">
+        <div class="col-lg-2 col-sm-2 col-xs-12">
             <div class="radio">
                 <label>
                     <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked ng-click="setForm('login')">
@@ -14,36 +14,38 @@
                 </label>
             </div>
         </div>
-        <div class="col-lg-10 col-sm-10 col-xs-8" style="border-left: 1px solid darkgray">
+        <div class="col-lg-10 col-sm-10 col-xs-12">
             <form role="form" name="signUpForm" ng-show="isSignup" class="col-lg-6 col-sm-6 col-xs-12" novalidate ng-submit="signup()">
                 <fieldset>
                     <legend>Sign-up</legend>
                     <div class="form-group">
-                        <label for="inputName">Name</label>
-                        <input required type="text" class="form-control" id="inputName" placeholder="Please enter your full name" name="name" ng-model="userName">
+                        <label for="name">Name</label>
+                        <input required type="text" class="form-control" id="name" placeholder="Please enter your full name" name="name" ng-model="userName">
                         <div ng-show="signUpForm.name.$dirty && signUpForm.name.$invalid">
                             <span ng-show="signUpForm.name.$error.required">Username required.</span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail1">Email</label>
-                        <input required type="email" class="form-control" id="inputEmail1" placeholder="Please enter your email id" name="emailId" ng-model="userEmail">
-                        <div ng-show="signUpForm.userEmail.$dirty && signUpForm.userEmail.$invalid">
-                            <span ng-show="signUpForm.userEmail.$error.required">Email required.</span>
+                        <label for="emailId">Email</label>
+                        <input required type="email" class="form-control" id="emailId" placeholder="Please enter your email id" name="emailId" ng-model="userEmail">
+                        <div ng-show="signUpForm.emailId.$dirty && signUpForm.emailId.$invalid">
+                            <span ng-show="signUpForm.emailId.$error.required">Email required.</span>
+                            <span ng-show="!signUpForm.emailId.$error.required && signUpForm.emailId.$error.email && signUpForm.emailId.$dirty">Invalid email</span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword">Password</label>
-                        <input required type="password" class="form-control" id="inputPassword" placeholder="Please enter your password" name="password" ng-model="password">
+                        <label for="password">Password</label>
+                        <input required type="password" class="form-control" id="password" placeholder="Please enter your password" name="password" ng-model="password">
                         <div ng-show="signUpForm.password.$dirty && signUpForm.password.$invalid">
                             <span ng-show="signUpForm.password.$error.required">Password required.</span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputRePassword">Confirm Password</label>
-                        <input required type="password" class="form-control" id="inputRePassword" placeholder="Please re-enter your password" name="confPassword" ng-model="confPassword">
+                        <label for="confPassword">Confirm Password</label>
+                        <input required type="password" class="form-control" conf-pwd="password" id="confPassword" placeholder="Please re-enter your password" name="confPassword" ng-model="confPassword">
                         <div ng-show="signUpForm.confPassword.$dirty && signUpForm.confPassword.$invalid">
-                            <span ng-show="signUpForm.confPassword.$error.required">Confirm Password required.</span>
+                            <span ng-show="signUpForm.confPassword.$error.required">Please confirm your password</span>
+                            <span ng-show="!signUpForm.confPassword.$error.required && signUpForm.confPassword.$error.pwdmatch && signUpForm.confPassword.$dirty">Password don't match</span>
                         </div>
                     </div>
                     <button class = "btn btn-primary" ng-disabled="signUpForm.$invalid" type="submit">Sign-up</button>
@@ -53,20 +55,21 @@
             </form>
         </div>
 
-        <div class="col-lg-10 col-sm-10 col-xs-8" style="border-left: 1px solid darkgray">
+        <div class="col-lg-10 col-sm-10 col-xs-8">
                 <form role="form" name="loginForm" ng-show="isLogin" class="col-lg-6 col-sm-6 col-xs-12" novalidate ng-submit="login()">
                 <fieldset>
                     <legend>Login</legend>
                     <div class="form-group">
-                        <label for="inputLogEmail1">Email</label>
-                        <input required type="email" class="form-control" id="inputLogEmail1" placeholder="Please enter your registered email id" name="logEmail" ng-model="userLogEmail">
+                        <label for="logEmail">Email</label>
+                        <input required type="email" class="form-control" id="logEmail" placeholder="Please enter your registered email id" name="logEmail" ng-model="userLogEmail">
                         <div ng-show="loginForm.logEmail.$dirty && loginForm.logEmail.$invalid">
                             <span ng-show="loginForm.logEmail.$error.required">Email required.</span>
+                            <span ng-show="!loginForm.logEmail.$error.required && loginForm.logEmail.$error.email && loginForm.logEmail.$dirty">Invalid email</span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputLogPassword">Password</label>
-                        <input required type="password" class="form-control" id="inputLogPassword" placeholder="Please enter your password" name="logPassword" ng-model="userLogPassword">
+                        <label for="logPassword">Password</label>
+                        <input required type="password" class="form-control" id="logPassword" placeholder="Please enter your password" name="logPassword" ng-model="userLogPassword">
                         <div ng-show="loginForm.logPassword.$dirty && loginForm.logPassword.$invalid">
                             <span ng-show="loginForm.logPassword.$error.required">Password required.</span>
                         </div>
