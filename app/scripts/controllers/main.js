@@ -222,3 +222,45 @@ angular.module('kinoeduApp')
 
     });
 
+angular.module('kinoeduApp')
+    .controller('forgotPasswordController', function($scope, $http){
+
+      $scope.sendEmailToForgotPass = function(){
+
+          var userEmail = $scope.userEmail;
+          console.log(userEmail);
+
+        var ForgotPassObj = {
+            email:userEmail
+        }
+
+        $scope.message = '';
+        $scope.errorMessage = '';
+
+        $http.post('/api/users/forgotPass',ForgotPassObj)
+            .success(function(data, status, headers, config){
+                console.log('Data >> ',data);
+                console.log('Status >> ',status)
+                if(status == 200){
+                    $scope.message = 'Email has been sent with reset password.'
+                }
+
+            })
+            .error(function(data, status, headers, config){
+                console.log('Status >> ',status);
+                if(404 === status){
+                    console.log('Page not found!!!');
+                }
+                if(status == 400){
+                    $scope.errorMessage = 'Invalid Email';
+
+                }
+            })
+
+      }
+
+});
+
+
+//forgotPasswordController
+

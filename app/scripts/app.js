@@ -24,6 +24,10 @@ angular.module('kinoeduApp', ['ngSanitize'])
                 controller: 'BlogController',
                 action:"blog"
             })
+            .when('/forgotPassword', {
+                templateUrl: 'views/forgotPassword.html',
+                controller: 'forgotPasswordController'
+            })
             .otherwise({
                 redirectTo: '/',
                 action:"/"
