@@ -1,5 +1,7 @@
+<!-- Main container for the Login and Sign-up template -->
 <div class="container main-frame">
     <div class="row">
+        <!-- Selection i.e. user choice whether he want to sign-up or login -->
         <div class="col-lg-2 col-sm-2 col-xs-12">
             <div class="radio">
                 <label>
@@ -15,9 +17,12 @@
             </div>
         </div>
         <div class="col-lg-10 col-sm-10 col-xs-12">
-            <form role="form" name="signUpForm" ng-show="isSignup" class="col-lg-6 col-sm-6 col-xs-12" novalidate ng-submit="signup()">
+            <!-- Sign-up form -->
+            <form role="form" name="signUpForm" ng-show="isSignup" class="col-lg-6 col-sm-6 col-xs-12" novalidate ng-submit="signUp()">
                 <fieldset>
+                    <!-- Form title -->
                     <legend>Sign-up</legend>
+                    <!-- Form elements -->
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input required type="text" class="form-control" id="name" placeholder="Please enter your full name" name="name" ng-model="userName">
@@ -49,16 +54,17 @@
                         </div>
                     </div>
                     <button class = "btn btn-primary" ng-disabled="signUpForm.$invalid" type="submit">Sign-up</button>
-                    <span style="color:green">{{signUpMessage}}</span>
-                    <span style="color:red">{{signUpErrorMessage}}</span>
                 </fieldset>
+                <!-- Error message -->
+                <div class="alert alert-danger" style="margin-top: 10px" ng-show="signUpErrorMessage">{{signUpErrorMessage}}</div>
+                <div class="alert alert-success" style="margin-top: 10px" ng-show="signUpMessage">{{signUpMessage}}</div>
             </form>
-        </div>
-
-        <div class="col-lg-10 col-sm-10 col-xs-8">
-                <form role="form" name="loginForm" ng-show="isLogin" class="col-lg-6 col-sm-6 col-xs-12" novalidate ng-submit="login()">
+            <!-- Login form -->
+            <form role="form" name="loginForm" ng-show="isLogin" class="col-lg-6 col-sm-6 col-xs-12" novalidate ng-submit="login()">
                 <fieldset>
+                    <!-- Form Title -->
                     <legend>Login</legend>
+                    <!-- Form elements -->
                     <div class="form-group">
                         <label for="logEmail">Email</label>
                         <input required type="email" class="form-control" id="logEmail" placeholder="Please enter your registered email id" name="logEmail" ng-model="userLogEmail">
@@ -75,8 +81,9 @@
                         </div>
                     </div>
                     <button class = "btn btn-primary" ng-disabled="loginForm.$invalid" type="submit">Login</button>
-                    <span style="color:red">{{loginMessage}}</span>
                 </fieldset>
+                <!-- Error message -->
+                <div class="alert alert-danger" style="margin-top: 10px;" ng-show="loginMessage">{{loginMessage}}</div>
             </form>
         </div>
     </div>

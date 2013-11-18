@@ -1,19 +1,34 @@
 'use strict';
 
+/**
+ * Main controller for KinoEdu App. All the app level functionality and variable will be defined here.
+ */
 angular.module('kinoeduApp')
-    .controller("AppController",function($scope,$http,$route,$routeParams,$location){
+    .controller("AppController",['$window','BasicAuth','$scope','$rootScope','$http','$route','$routeParams','$location','$cookieStore',function($window,BasicAuth,$scope,$rootScope,$http,$route,$routeParams,$location,$cookieStore){
+        $rootScope.authUserName = '';
+        $rootScope.authUserPwd = '';
+
+        if($cookieStore.get('authData')){
+            $rootScope.isAuthUser = true;
+        }  else {
+            $rootScope.isAuthUser = false;
+        }
         $scope.$on(
             "$routeChangeSuccess",
             function( $currentRoute, $previousRoute ){
-                console.log($route.current.action)
-                $location.path($route.current.action)
+                $location.path($route.current.action);
             }
         );
-    });
+        /**
+         * TODO: Clear user authentication cookie on window close.
+         */
+    }]);
 
+/**
+ *   Controller for the course route
+ */
 angular.module('kinoeduApp')
     .controller("CoursesController", function($scope, $http){
-
         $scope.apiKey = "3a77627518497615f3a8661542e8ec86";
         $scope.results = [];
         $scope.filterText = null;
@@ -74,12 +89,10 @@ angular.module('kinoeduApp')
         };
 
         /**
-         * Implement the courses list functionality here and later put into $scope.init().
+         * TODO: Implement the courses list functionality here and later put into $scope.init().
          */
         $http.get("/api/courses")
             .success(function(data){
-                //Success;
-                //console.log("Success: " + data);
                 angular.forEach(data, function(value, index){
                     //console.log("Object value is >>> " + value.title);
                 })
@@ -92,12 +105,15 @@ angular.module('kinoeduApp')
 
     });
 
+/**
+ * Controller for the Login and Sign-up route
+ */
 angular.module('kinoeduApp')
-    .controller("LoginController", function($scope, $http, $location){
+    .controller("LoginController",['BasicAuth','$scope','$rootScope','$http','$location',function(BasicAuth,$scope,$rootScope, $http, $location){
         $scope.isSignup = false;
         $scope.isLogin = true;
         /**
-         * Signup and login form variable decelerations
+         * Signup and Login form models decelerations
          * @param selectForm
          */
 
@@ -111,10 +127,10 @@ angular.module('kinoeduApp')
         var loginUrl = "/api/users/logIn";
         var signupUrl = "/api/users/signUp";
 
-        $scope.signup = function(){
-
-            console.log('in sign up');
-
+        /**
+         * @desc The function is responsible to register a user
+         */
+        $scope.signUp = function(){
             var nameStr = $scope.userName.split(" ");
             var firstNameStr = nameStr[0];
             var lastNameStr = nameStr[1];
@@ -131,12 +147,9 @@ angular.module('kinoeduApp')
 
             $http.post(signupUrl,signUpObj)
                 .success(function(data, status, headers, config){
-                    console.log('Data >> ',data);
-                    console.log('Status >> ',status);
                     if(200 === status){
-                        //user has been created successfully
-                        //TODO - handle it properly
-                        $scope.signUpMessage = 'user has been created successfully!';
+                        //TODO: Handle the success appropriately i.e. redirect user to appropriate page.
+                        $scope.signUpMessage = 'User has been created successfully!';
                     }
                 })
                 .error(function(data, status, headers, config){
@@ -165,21 +178,20 @@ angular.module('kinoeduApp')
                 })
         }
 
+        /**
+         *  @desc Function is responsible for validating user and successfully authenticate
+         */
         $scope.login = function(){
             var userEmail = $scope.userLogEmail;
             var userPassword = $scope.userLogPassword;
 
-            var loginObj = {
-                email:$scope.userLogEmail,
-                password:$scope.userLogPassword
-            }
+            BasicAuth.setCredentials(userEmail,userPassword);
 
-            $http.post(loginUrl,loginObj)
+            $http.post(loginUrl)
                 .success(function(data, status, headers, config){
-                    console.log('Data >> ',data);
-                    console.log('Status >> ',status)
                     if(status == 200){
-                            $location.path('/');
+                        $rootScope.isAuthUser = true;
+                        $location.path('/');
                     }
 
                 })
@@ -189,11 +201,16 @@ angular.module('kinoeduApp')
                     }
                     if(status == 401){
                       $scope.loginMessage = 'Invalid email or password';
-
+                      $rootScope.isAuthUser = false;
+                      BasicAuth.clearCredentials();
                     }
                 })
         }
 
+        /**
+         * @param selectForm  - Pass user selection for further processing
+         * @desc Responsible to display the appropriate form as per user selection i.e. Sign-up or Login
+         */
         $scope.setForm = function(selectForm){
             if(selectForm === 'signup'){
                 $scope.isSignup = true;
@@ -203,23 +220,79 @@ angular.module('kinoeduApp')
                 $scope.isLogin = true;
             }
         }
-    });
 
+        /**
+         * @desc The function is responsible to reset the forms i.e. Sign-up and Login
+         * @todo Use these function effectively to erase the user information when he switch between the forms.
+         */
+        $scope.resetForms = function(){
+            $scope.userName = '';
+            $scope.userEmail = '';
+            $scope.password = '';
+            $scope.confPassword = '';
+            $scope.userLogEmail = '';
+            $scope.userLogPassword = '';
+        }
+    }]);
+
+/**
+ * A controller for the Logout route
+ * @todo Integrate the functionality within the login controller itself as there is no need for the Logout route
+ */
 angular.module('kinoeduApp')
-    .controller("navbarController",function($scope, $location){
+    .controller("LogoutController",['BasicAuth','$scope','$rootScope','$http','$location',function(BasicAuth,$scope,$rootScope, $http, $location){
+        var logOutUrl = '/api/logOut';
+        $http.post(logOutUrl)
+            .success(function(data, status){
+                if(status == 200){
+                    $rootScope.isAuthUser = false;
+                    BasicAuth.clearCredentials();
+                    $location.path('/');
+                }
+            })
+            .error(function(data, status, headers, config){
+                console.log('Error!!!')
+                if(404 === status){
+                    console.log('Page not found!!!');
+                }
+                if(status == 401){
+
+                }
+            })
+    }]);
+
+/**
+ * A controller for the applications navigation menu
+ */
+angular.module('kinoeduApp')
+    .controller("NavbarController",function($scope, $location){
         $scope.isActive = function (viewLocation) {
-            //console.log(viewLocation);
+            console.log('isActive >>> '+viewLocation +" === "+ $location.path());
             return viewLocation === $location.path();
         };
     });
 
+/**
+ *  A controller for the create course route
+ */
+angular.module('kinoeduApp')
+    .controller("NewCourseController",function($scope,$http){
+        $scope.courseTitle = '';
+    });
+/**
+ * A controller for the Contact Us route
+ * @todo Functionality is yet to be implemented
+ */
 angular.module('kinoeduApp')
     .controller("ContactController",function($scope,$http){
 
     });
 
+/**
+ * A controller for the Blog route
+ * @todo Functionality is yet to be implemented
+ */
 angular.module('kinoeduApp')
     .controller("BlogController",function($scope,$http){
 
     });
-

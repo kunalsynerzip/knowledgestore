@@ -40,14 +40,20 @@
                         <span class = "icon-bar"></span>
                     </button>
 
-                    <div class = "collapse navbar-collapse navHeaderCollapse" ng-controller="navbarController">
-
-                        <ul class = "nav navbar-nav navbar-right">
-
-                            <li ng-class = "{ active: isActive('/')}"><a href = "/">Courses</a></li>
+                    <div class = "collapse navbar-collapse navHeaderCollapse" ng-controller="NavbarController">
+                        <ul class = "nav navbar-nav navbar-right" ng-switch="isAuthUser">
+                            <!--<li ng-class = "{ active: isActive('/')}"><a href = "/">Courses</a></li>-->
+                            <li ng-class = "{active: isActive('/') || isActive('newCourse')}">
+                                <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Courses <b class = "caret"></b></a>
+                                <ul class = "dropdown-menu">
+                                    <li><a href = "/">Courses</a></li>
+                                    <li><a href = "/newCourse">Create Course</a></li>
+                                    <!--<li><a href = "#">Google+</a></li>
+                                    <li><a href = "#">Instagram</a></li>-->
+                                </ul>
+                            </li>
                             <li ng-class = "{ active: isActive('/blog')}"><a href = "/blog">Blog</a></li>
                             <!--<li class = "dropdown">
-
                                 <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Social Media <b class = "caret"></b></a>
                                 <ul class = "dropdown-menu">
                                     <li><a href = "#">Twitter</a></li>
@@ -55,13 +61,11 @@
                                     <li><a href = "#">Google+</a></li>
                                     <li><a href = "#">Instagram</a></li>
                                 </ul>
-
                             </li>-->
-                            <li ng-class="{ active: isActive('/login')}"><a href = "/login">Login</a></li>
                             <li ng-class="{ active: isActive('/contact')}"><a href = "/contact">Contact Us</a></li>
-
+                            <li ng-switch-when="true" ng-class="{ active: isActive('/login')}"><a  href="/logout">Logout</a></li>
+                            <li ng-switch-default ng-class="{ active: isActive('/login')}"><a  href="/login">Login</a></li>
                         </ul>
-
                     </div>
 
                 </div>
@@ -79,22 +83,29 @@
         </div>
 
     </div>
+    <!-- Build:js scripts/libraries.js -->
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <!-- End build -->
 
-    <!-- build:js scripts/plugins.js -->
+    <!-- Build:js scripts/plugins.js -->
     <script src="bower_components/bootstrap-sass/dist/js/bootstrap.min.js"></script>
-    <!-- endbuild -->
+    <!-- End build -->
 
-    <!-- build:js scripts/modules.js -->
+    <!-- Build:js scripts/modules.js -->
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <!-- endbuild -->
+    <!-- End build -->
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <!-- Build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/filters/filters.js"></script>
     <script src="scripts/directives/confirmPassword.js"></script>
-        <!-- endbuild -->
+    <script src="scripts/services/base64.js"></script>
+    <script src="scripts/services/basicAuthentication.js"></script>
+
+    <!-- End build -->
 </body>
 </html>

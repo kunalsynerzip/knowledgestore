@@ -1,6 +1,10 @@
 /**
  * Created by kunal on 8/11/13.
  */
+
+/**
+ * A custom directive to compare and validate the user password at the time of sign-up
+ */
 angular.module('passwordConfirmation', [])
     .directive('confPwd', [function () {
         return {
@@ -9,7 +13,6 @@ angular.module('passwordConfirmation', [])
                 var firstPassword = '#' + attrs.confPwd;
                 elem.add(firstPassword).on('keyup', function () {
                     scope.$apply(function () {
-                        // console.info(elem.val() === $(firstPassword).val());
                         ctrl.$setValidity('pwdmatch', elem.val() === $(firstPassword).val())//((elem.val() === $(firstPassword).val()) || (elem.val() === '')));
                     });
                 });
