@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('kinoeduApp', ['ngSanitize'])
-    .config(function ($routeProvider,$locationProvider) {
+angular.module('kinoeduApp', ['ngRoute', 'ngSanitize'])
+    .config(function ($routeProvider, $locationProvider) {
 //    .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
