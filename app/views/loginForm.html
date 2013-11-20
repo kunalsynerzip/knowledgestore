@@ -1,4 +1,4 @@
-<div class="container main-frame">
+<div class="container main-frame" ng-app="kinoeduApp" ng-controller="LoginController">
     <div class="row">
         <div class="col-lg-2 col-sm-2 col-xs-4">
             <div class="radio">
@@ -11,6 +11,11 @@
                 <label>
                     <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"  ng-click="setForm('signup')">
                     <h4>Sign-up</h4>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <a href = "/fbLogin" ng-click="fbLogin()">Login with FB</a>
                 </label>
             </div>
         </div>

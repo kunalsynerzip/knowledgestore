@@ -92,7 +92,7 @@ angular.module('kinoeduApp')
     });
 
 angular.module('kinoeduApp')
-    .controller("LoginController", function($scope, $http, $location){
+    .controller("LoginController", function($scope, $http, $location, $window){
         $scope.isSignup = false;
         $scope.isLogin = true;
         /**
@@ -109,6 +109,7 @@ angular.module('kinoeduApp')
 
         var loginUrl = "/api/users/logIn";
         var signupUrl = "/api/users/signUp";
+        var fbLoginUrl = '/api/users/fbLogin';
 
         $scope.signup = function(){
 
@@ -201,6 +202,10 @@ angular.module('kinoeduApp')
                 $scope.isSignup = false;
                 $scope.isLogin = true;
             }
+        }
+
+        $scope.fbLogin = function(){
+            $window.location.href = fbLoginUrl;
         }
     });
 
