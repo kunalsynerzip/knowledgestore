@@ -5019,3 +5019,18 @@ h1, h2, h3 {
 
 .show-info span.label {
   display: inline-block !important; }
+
+.social-login a{
+    height: 50px;
+    font-size: 20px;
+}
+
+.social-login li {
+    list-style: none;
+}
+
+.social-login {
+    list-style: none;
+    padding: 0px;
+    margin-top: 20px;
+}

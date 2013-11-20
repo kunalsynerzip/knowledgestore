@@ -13,21 +13,6 @@
                     <h4>Sign-up</h4>
                 </label>
             </div>
-            <div class="radio">
-                <label>
-                    <a href = "/fbLogin" ng-click="fbLogin()">Login with FB</a>
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <a href = "/githubLogin" ng-click="githubLogin()">Login with Github</a>
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <a href = "/googleLogin" ng-click="googleLogin()">Login with Google</a>
-                </label>
-            </div>
         </div>
         <div class="col-lg-10 col-sm-10 col-xs-8" style="border-left: 1px solid darkgray">
             <form role="form" name="signUpForm" ng-show="isSignup" class="col-lg-6 col-sm-6 col-xs-12" novalidate ng-submit="signup()">
@@ -94,6 +79,17 @@
                        <a href="/forgotPassword">Forgot Password?</a>
                     </div>
                 </fieldset>
+                    <ul class="social-login">
+                        <li>
+                            <a href="/fbLogin" ng-click="fbLogin()">Login with Facebook</a>
+                        </li>
+                        <li>
+                            <a href="/githubLogin" ng-click="githubLogin()">Login with Github</a>
+                        </li>
+                        <li>
+                            <a href="/googleLogin" ng-click="googleLogin()">Login with Google</a>
+                        </li>
+                    </ul>
             </form>
         </div>
     </div>
