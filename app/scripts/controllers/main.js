@@ -111,6 +111,7 @@ angular.module('kinoeduApp')
         var signupUrl = "/api/users/signUp";
         var fbLoginUrl = '/api/users/fbLogin';
         var githubLoginUrl = '/api/users/githubLogin';
+        var googleLoginUrl = '/api/users/googleLogin';
 
         $scope.signup = function(){
 
@@ -210,6 +211,9 @@ angular.module('kinoeduApp')
         }
         $scope.githubLogin = function(){
             $window.location.href = githubLoginUrl;
+        }
+        $scope.googleLogin = function(){
+            $window.location.href = googleLoginUrl;
         }
 
     });
