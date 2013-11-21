@@ -231,6 +231,51 @@ angular.module('kinoeduApp')
 
 });
 
+angular.module('kinoeduApp')
+    .controller('changePasswordController', function($scope, $http){
 
-//forgotPasswordController
+        $scope.changePass = function(){
+
+            var currentPassword = $scope.currentPassword;
+            var newPassword = $scope.newPassword;
+            var confirmPassword = $scope.confirmPassword;
+
+            /*
+            * validate new and confirm password
+            * */
+
+            console.log(currentPassword + ' ' + newPassword + ' ' + confirmPassword);
+
+            var changePassObj = {
+                currentPass : currentPassword,
+                newPass : newPassword
+            }
+
+            $scope.message = '';
+            $scope.errorMessage = '';
+
+            $http.post('/api/users/changePass',changePassObj)
+                .success(function(data, status, headers, config){
+                    console.log('Data >> ',data);
+                    console.log('Status >> ',status)
+                    if(status == 200){
+                        $scope.message = 'Password changed successfully.'
+                    }
+
+                })
+                .error(function(data, status, headers, config){
+                    console.log('Status >> ',status);
+                    if(404 === status){
+                        console.log('Page not found!!!');
+                    }
+                    if(status == 400){
+                        $scope.errorMessage = 'Invalid password!!';
+
+                    }
+                })
+
+        }
+
+    });
+
 

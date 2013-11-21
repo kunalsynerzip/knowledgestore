@@ -31,6 +31,10 @@ angular.module('kinoeduApp', ['ngRoute', 'ngSanitize'])
             .when('/activation', {
                 templateUrl: 'views/userActivation.html'
             })
+            .when('/changePass', {
+                templateUrl: 'views/changePassword.html',
+                controller : 'changePasswordController'
+            })
             .otherwise({
                 redirectTo: '/',
                 action:"/"
