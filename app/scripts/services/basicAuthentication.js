@@ -5,7 +5,7 @@
 /**
  * A factory created for storing the basic authentication information of user within the cookie. Also the factory is responsible to set the basic authentication information to request header.
  */
-angular.module('kinoeduApp')
+angular.module('kinoEduServices')
     .factory('BasicAuth', ['Base64', '$cookieStore', '$http',function (Base64,$cookieStore,$http) {
         // initialize to whatever is in the cookie, if anything
         $http.defaults.headers.common['Authorization'] = 'Basic ' + $cookieStore.get('authData');

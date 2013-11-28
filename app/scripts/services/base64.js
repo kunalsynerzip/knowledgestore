@@ -5,7 +5,7 @@
 /**
  * The factory is created to encode and decode the string value as per Base64 guideline.
  */
-angular.module('kinoeduApp')
+angular.module('kinoEduServices')
     .factory('Base64', function() {
         var keyStr = 'ABCDEFGHIJKLMNOP' +
             'QRSTUVWXYZabcdef' +

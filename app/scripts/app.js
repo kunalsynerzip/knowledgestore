@@ -1,5 +1,5 @@
 'use strict';
-angular.module('kinoeduApp', ['ngRoute','ngCookies','ngSanitize','passwordConfirmation'])
+angular.module('kinoEduApp', ['ngRoute','ngCookies','ngSanitize','kinoEduDirectives','kinoEduServices','kinoEduFilters'])
     .config(function ($routeProvider,$locationProvider,$provide) {
         $routeProvider
             .when('/', {
@@ -29,8 +29,13 @@ angular.module('kinoeduApp', ['ngRoute','ngCookies','ngSanitize','passwordConfir
             })
             .when('/newCourse', {
                 templateUrl: 'views/createCourse.html',
-                controller: 'NewCourseController',
+                controller: 'CreateCourseController',
                 action:"newCourse"
+            })
+            .when('/viewCourse', {
+                templateUrl: 'views/viewCourse.html',
+                controller: 'ViewCourseController',
+                action:"viewCourse"
             })
             .otherwise({
                 redirectTo: '/',
@@ -41,5 +46,20 @@ angular.module('kinoeduApp', ['ngRoute','ngCookies','ngSanitize','passwordConfir
             .html5Mode(true);
     });
 
+/**
+ * Initialize Services Module
+ */
+
+angular.module('kinoEduServices',[]);
+
+/**
+ * Initialize Directives Module
+ */
+angular.module('kinoEduDirectives',[]);
+
+/**
+ * Initialize Filters Module
+ */
+angular.module('kinoEduFilters',[]);
 
 

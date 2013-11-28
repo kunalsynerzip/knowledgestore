@@ -3,7 +3,7 @@
 /**
  * Main controller for KinoEdu App. All the app level functionality and variable will be defined here.
  */
-angular.module('kinoeduApp')
+angular.module('kinoEduApp')
     .controller("AppController",['$window','BasicAuth','$scope','$rootScope','$http','$route','$routeParams','$location','$cookieStore',function($window,BasicAuth,$scope,$rootScope,$http,$route,$routeParams,$location,$cookieStore){
         $rootScope.authUserName = '';
         $rootScope.authUserPwd = '';
@@ -27,7 +27,7 @@ angular.module('kinoeduApp')
 /**
  *   Controller for the course route
  */
-angular.module('kinoeduApp')
+angular.module('kinoEduApp')
     .controller("CoursesController", function($scope, $http){
         $scope.apiKey = "3a77627518497615f3a8661542e8ec86";
         $scope.results = [];
@@ -108,7 +108,7 @@ angular.module('kinoeduApp')
 /**
  * Controller for the Login and Sign-up route
  */
-angular.module('kinoeduApp')
+angular.module('kinoEduApp')
     .controller("LoginController",['BasicAuth','$scope','$rootScope','$http','$location',function(BasicAuth,$scope,$rootScope, $http, $location){
         $scope.isSignup = false;
         $scope.isLogin = true;
@@ -185,9 +185,9 @@ angular.module('kinoeduApp')
             var userEmail = $scope.userLogEmail;
             var userPassword = $scope.userLogPassword;
 
-            BasicAuth.setCredentials(userEmail,userPassword);
+            //BasicAuth.setCredentials(userEmail,userPassword);
 
-            $http.post(loginUrl)
+            $http.post(loginUrl,{email:userEmail,password:userPassword})
                 .success(function(data, status, headers, config){
                     if(status == 200){
                         $rootScope.isAuthUser = true;
@@ -239,7 +239,7 @@ angular.module('kinoeduApp')
  * A controller for the Logout route
  * @todo Integrate the functionality within the login controller itself as there is no need for the Logout route
  */
-angular.module('kinoeduApp')
+angular.module('kinoEduApp')
     .controller("LogoutController",['BasicAuth','$scope','$rootScope','$http','$location',function(BasicAuth,$scope,$rootScope, $http, $location){
         var logOutUrl = '/api/logOut';
         $http.post(logOutUrl)
@@ -258,16 +258,19 @@ angular.module('kinoeduApp')
                 if(status == 401){
 
                 }
+                $rootScope.isAuthUser = false;
+                BasicAuth.clearCredentials();
+                $location.path('/');
             })
     }]);
 
 /**
  * A controller for the applications navigation menu
  */
-angular.module('kinoeduApp')
+angular.module('kinoEduApp')
     .controller("NavbarController",function($scope, $location){
         $scope.isActive = function (viewLocation) {
-            console.log('isActive >>> '+viewLocation +" === "+ $location.path());
+            //console.log('isActive >>> '+viewLocation +" === "+ $location.path());
             return viewLocation === $location.path();
         };
     });
@@ -275,24 +278,178 @@ angular.module('kinoeduApp')
 /**
  *  A controller for the create course route
  */
-angular.module('kinoeduApp')
-    .controller("NewCourseController",function($scope,$http){
-        $scope.courseTitle = '';
+angular.module('kinoEduApp')
+    .controller("CreateCourseController",['CreateCourseData','ApiCommunicationService','$scope','$location',function(CreateCourseData,ApiCommObj,$scope,$location){
+        $scope.courseTitle = CreateCourseData.courseTitle;
+        $scope.courseCategoryArr = CreateCourseData.courseCategoryArr;
+        $scope.selectedCategory = CreateCourseData.selectedCategory;
+        $scope.courseLevelArr = CreateCourseData.courseLevelArr
+        $scope.selectedLevel = CreateCourseData.selectedLevel;
+        $scope.courseSummary = CreateCourseData.courseSummary;
+        $scope.courseTags = CreateCourseData.courseTags;
+        $scope.courseKeyword = '';
+        $scope.courseDetails = CreateCourseData.courseDetails;
+        $scope.coursePromoVideo = CreateCourseData.coursePromoVideo;
+        $scope.courseAuthor = CreateCourseData.courseAuthor;
+        $scope.sectionData = CreateCourseData.sectionData;
+
+        /*$scope.addTopic = CreateCourseData.addTopic;
+        $scope.addSection = CreateCourseData.addSection;*/
+
+        $scope.addTopic = function($event,sectionId){
+           /* if($event.keyCode == 13){
+                $event.preventDefault();
+                return;
+            }*/
+            CreateCourseData.addTopic($event,sectionId);
+        }
+
+        $scope.addSection = function($event){
+            /*if($event.keyCode == 13){
+                $event.preventDefault();
+                return;
+            }*/
+            CreateCourseData.addSection($event);
+        }
+
+        $scope.addTag = function() {
+            if ($scope.courseKeyword.length == 0) {
+                return;
+            }
+            $scope.courseTags.push({name: $scope.courseKeyword});
+            $scope.courseKeyword = '';
+        }
+
+        $scope.deleteTag = function(key) {
+            if ($scope.courseTags.length > 0 &&
+                $scope.courseKeyword.length == 0 &&
+                key === undefined) {
+                $scope.courseTags.pop();
+            } else if (key != undefined) {
+                $scope.courseTags.splice(key, 1);
+            }
+        }
+        /*$scope.$watch('courseTitle',function(courseTitle){
+            CreateCourseData.courseTitle = courseTitle;
+        })*/
+
+        $scope.$watchCollection('[courseTitle,courseCategoryArr,selectedCategory,courseLevelArr,selectedLevel,courseSummary,courseDetails,coursePromoVideo,courseAuthor,courseKeyword,sectionData]',function(watchValArr){
+            CreateCourseData.courseTitle = watchValArr[0];
+            CreateCourseData.courseCategoryArr = watchValArr[1];
+            CreateCourseData.selectedCategory = watchValArr[2];
+            CreateCourseData.courseLevelArr = watchValArr[3];
+            CreateCourseData.selectedLevel = watchValArr[4];
+            CreateCourseData.courseSummary = watchValArr[5];
+            CreateCourseData.courseDetails = watchValArr[6];
+            CreateCourseData.coursePromoVideo = watchValArr[7];
+            CreateCourseData.courseAuthor = watchValArr[8];
+            CreateCourseData.courseKeyword = watchValArr[9];
+            CreateCourseData.sectionData = watchValArr[10];
+        })
+
+        $scope.createCourse = function($event){
+            if($event.keyCode == 13 ){
+                $event.preventDefault();
+                return;
+            }
+
+            var courseData = {
+                title: $scope.courseTitle,
+                summary: $scope.courseSummary,
+                vidLink : $scope.coursePromoVideo,
+                comments: [{body: ''}],
+                tags: $scope.courseTags,
+                preRequisite : $scope.courseDetails,
+                category : $scope.selectedCategory,
+                authors : $scope.courseAuthor,
+                level : $scope.selectedLevel,
+                rating : 0,
+                courseMaterial : $scope.sectionData
+            }
+
+            ApiCommObj.postData('api/courses',courseData)
+                .success(function(data,status){
+                    if(status == 200){
+                        console.log('The course with following data is created!!!\n',data);
+                    }
+                    console.log('I am called!!!')
+                    $scope.resetCourseForm();
+                    $location.path('/viewCourse');
+                })
+                .error(function(data,status,headers, config){
+                    if(404 === status){
+                        console.log('Page not found!!!');
+                    }
+                    if(401 === status){
+                        console.log('ERROR!!!',data)
+                    }
+
+                    if(400 === status){
+                        console.log(data)
+                    }
+                })
+
+            if($scope.isCreated){
+
+            } else {
+
+            }
+        }
+
+        $scope.resetCourseForm = function(){
+            $scope.createCourseForm.$setPristine();
+
+            var courseTagLength = $scope.courseTags.length;
+            for(var i=0 ; i< courseTagLength; i++){
+                $scope.deleteTag(0);
+            }
+
+            $scope.courseTitle = '';
+            $scope.selectedCategory = '';
+            $scope.selectedLevel = '';
+            $scope.courseSummary = '';
+            $scope.courseTags = [];
+            $scope.courseKeyword = '';
+            $scope.courseDetails = '';
+            $scope.coursePromoVideo = '';
+            $scope.courseAuthor = '';
+            $scope.sectionData = [
+                {
+                    sectionNumber:1,
+                    sectionTitle:"",
+                    topics:[
+                        {
+                            topicNumber:1,
+                            topicTitle:"",
+                            topicContent:"",
+                            topicVidLink:""
+                        }
+                    ]
+                }
+            ];
+        }
+    }]);
+
+/**
+ * A controller for the View Course route
+ * @todo Functionality is yet to be implemented
+ */
+angular.module('kinoEduApp')
+    .controller("ViewCourseController",function($scope,$http){
     });
+
 /**
  * A controller for the Contact Us route
  * @todo Functionality is yet to be implemented
  */
-angular.module('kinoeduApp')
+angular.module('kinoEduApp')
     .controller("ContactController",function($scope,$http){
-
     });
 
 /**
  * A controller for the Blog route
  * @todo Functionality is yet to be implemented
  */
-angular.module('kinoeduApp')
+angular.module('kinoEduApp')
     .controller("BlogController",function($scope,$http){
-
     });

@@ -5,7 +5,7 @@
 /**
  * A custom directive to compare and validate the user password at the time of sign-up
  */
-angular.module('passwordConfirmation', [])
+angular.module('kinoEduDirectives')
     .directive('confPwd', [function () {
         return {
             require: 'ngModel',

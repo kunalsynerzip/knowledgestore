@@ -5019,3 +5019,56 @@ h1, h2, h3 {
 
 .show-info span.label {
   display: inline-block !important; }
+
+.sectionHeader {
+  font-size: 14px;
+  font-weight: bold;
+  background: #777;
+  color: #ffffff; }
+
+button {
+  margin-top: 10px !important;
+  font-weight: bold !important; }
+
+.topicHeader {
+  font-size: 14px;
+  font-weight: bold;
+  background: #3d66a8;
+  color: #ffffff;
+  margin: 10px 0 10px 0; }
+
+.topicElement {
+  padding: 5px 0px !important; }
+
+.topicDetails {
+  margin-top: 10px;
+  border: 1px solid #333333;
+  padding: 0px 10px 10px 10px;
+  border-radius: 5px; }
+
+.tag-input-ctn {
+  border: 1px solid #ccc;
+  padding: 2px 3px;
+  height: 110px;
+  border-radius: 3px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075); }
+
+.tag-input-ctn .input-tag {
+  padding: 2px 4px;
+  line-height: 12px;
+  font-size: 11px;
+  background-color: #e3eaf6;
+  display: inline-block;
+  float: left;
+  border-radius: 2px;
+  margin: 2px 5px 2px 0px;
+  border: 1px solid #a9b6d2; }
+
+.tag-input-ctn .input-tag .delete-tag {
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0px 2px; }
+
+.tag-input-ctn .input-tag .delete-tag:hover {
+  background-color: #96b4d2; }

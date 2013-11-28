@@ -3,7 +3,7 @@
  * Filters for the application will reside here
  */
 
-angular.module('kinoeduApp')
+angular.module('kinoEduFilters')
     .filter('isGenre', function() {
         return function(input, genre) {
             if (typeof genre == 'undefined' || genre == null) {
