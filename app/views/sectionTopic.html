@@ -1,0 +1,38 @@
+<div class="form-control sectionHeader" id="sectionHeaderBar" name="sectionHeaderBar">
+    <span>Section</span>
+    <button class="pull-right   btn btn-primary" ng-click="addSection()">Add Section</button>
+</div>
+<div class="col-lg-12 col-sm-12 col-xs-12">
+    <label for="sectionTitle">Title</label>
+    <input required type="text" class="form-control" id="sectionTitle" placeholder="Please enter section title" name="sectionTitle" ng-model="sectionTitle">
+    <div ng-show="createCourseForm.sectionTitle.$dirty && createCourseForm.sectionTitle.$invalid">
+        <span ng-show="createCourseForm.sectionTitle.$error.required">Section title is mandatory.</span>
+    </div>
+    <div class="topicContent">
+        <div class="form-control topicHeader" id="topicHeaderBar" name="topicHeaderBar">
+            <span>Topic</span>
+            <button class="pull-right   btn btn-danger" ng-click="addTopic()">Add Topic</button>
+        </div>
+        <div class="topicElement">
+            <label for="topicTitle">Title</label>
+            <input required type="text" class="form-control" id="topicTitle" placeholder="Please enter topic title" name="topicTitle" ng-model="topicTitle">
+            <div ng-show="createCourseForm.topicTitle.$dirty && createCourseForm.topicTitle.$invalid">
+                <span ng-show="createCourseForm.topicTitle.$error.required">Topic title is mandatory.</span>
+            </div>
+        </div>
+        <div class="topicElement">
+            <label for="topicDescription">Topic Description</label>
+            <textarea rows="5" required type="text" class="form-control" id="topicDescription" placeholder="Please enter course goals, objective and pre-requisite (if any)" name="topicDescription" ng-model="topicDescription"/>
+            <div ng-show="createCourseForm.topicDescription.$dirty && createCourseForm.topicDescription.$invalid">
+                <span ng-show="createCourseForm.topicDescription.$error.required">Course summary is mandatory.</span>
+            </div>
+        </div>
+        <div class="topicElement">
+            <label for="topicVideo">Topic Video (Only Youtube videos)</label>
+            <input required type="text" class="form-control" id="topicVideo" placeholder="Please enter promo video link" name="topicVideo" ng-model="topicVideo">
+            <div ng-show="createCourseForm.topicVideo.$dirty && createCourseForm.topicVideo.$invalid">
+                <span ng-show="createCourseForm.topicVideo.$error.required">Course keywords are mandatory.</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,16 @@
-<div class="container main-frame" ng-app="kinoeduApp" ng-controller="CoursesController" ng-init="init()">
-    <div ng-switch="isAuthUser">
-        <input ng-switch-when="true" ng-model="currentUser"/>
-        <div ng-switch-when="false">Nobody looged in </div>
+<div class="container main-frame" ng-controller="CoursesController" ng-init="init()">
+    <div class="search-box form-inline">
+        <label for="filter">Filter: </label>
+        <input name="filter" id="filter" class="input-sm" type="text" ng-model="filterText"/>
+        <label>Genre: </label>
+        <select ng-model="genreFilter" ng-options="label for label in availableGenres">
+            <option value="">All</option>
+        </select>
+        <label>Order by: </label>
+        <select ng-model="orderField" ng-options="label for label in orderFields" class="input-medium"></select>
+        <select ng-model="orderReverse"class="input-medium">
+            <option value="true">Descending</option>
+            <option value="false">Ascending</option>
+        </select>
     </div>
 </div>

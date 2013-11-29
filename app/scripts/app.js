@@ -1,8 +1,7 @@
 'use strict';
 
-angular.module('kinoeduApp', ['ngRoute', 'ngSanitize'])
-    .config(function ($routeProvider, $locationProvider) {
-//    .config(function ($routeProvider) {
+angular.module('kinoEduApp', ['ngRoute','ngCookies','ngSanitize','kinoEduDirectives','kinoEduServices','kinoEduFilters'])
+    .config(function ($routeProvider,$locationProvider,$provide) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
@@ -13,6 +12,11 @@ angular.module('kinoeduApp', ['ngRoute', 'ngSanitize'])
                 templateUrl: 'views/loginForm.html',
                 controller: 'LoginController',
                 action:"login"
+            })
+            .when('/logout', {
+                templateUrl: 'views/main.html',
+                controller: 'LogoutController',
+                action:"logout"
             })
             .when('/contact', {
                 templateUrl: 'views/contactUs.html',
@@ -26,21 +30,48 @@ angular.module('kinoeduApp', ['ngRoute', 'ngSanitize'])
             })
             .when('/forgotPassword', {
                 templateUrl: 'views/forgotPassword.html',
-                controller: 'forgotPasswordController'
+                controller: 'ForgotPasswordController'
             })
             .when('/activation', {
                 templateUrl: 'views/userActivation.html'
             })
             .when('/changePass', {
                 templateUrl: 'views/changePassword.html',
-                controller : 'changePasswordController'
+                controller : 'ChangePasswordController'
+            })
+            .when('/newCourse', {
+                templateUrl: 'views/createCourse.html',
+                controller: 'CreateCourseController',
+                action:"newCourse"
+            })
+            .when('/viewCourse', {
+                templateUrl: 'views/viewCourse.html',
+                controller: 'ViewCourseController',
+                action:"viewCourse"
             })
             .otherwise({
                 redirectTo: '/',
                 action:"/"
             });
-        $locationProvider.html5Mode(true);
+
+        $locationProvider
+            .html5Mode(true);
     });
 
+/**
+ * Initialize Services Module
+ */
+
+angular.module('kinoEduServices',[]);
+
+/**
+ * Initialize Directives Module
+ */
+angular.module('kinoEduDirectives',[]);
+
+/**
+ * Initialize Filters Module
+ */
+angular.module('kinoEduFilters',[]);
 
 
