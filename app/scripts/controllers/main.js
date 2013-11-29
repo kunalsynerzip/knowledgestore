@@ -7,6 +7,7 @@ angular.module('kinoEduApp')
     .controller("AppController",['$window','BasicAuth','$scope','$rootScope','$http','$route','$routeParams','$location','$cookieStore',function($window,BasicAuth,$scope,$rootScope,$http,$route,$routeParams,$location,$cookieStore){
         $rootScope.authUserName = '';
         $rootScope.authUserPwd = '';
+        $rootScope.currentNavRoute = '/';
 
         if($cookieStore.get('authData')){
             $rootScope.isAuthUser = true;
@@ -28,7 +29,8 @@ angular.module('kinoEduApp')
  *   Controller for the course route
  */
 angular.module('kinoEduApp')
-    .controller("CoursesController", function($scope, $http){
+    .controller("CoursesController", function($scope, $http,$rootScope){
+        $rootScope.currentNavRoute = '/';
         $scope.apiKey = "3a77627518497615f3a8661542e8ec86";
         $scope.results = [];
         $scope.filterText = null;
@@ -110,6 +112,7 @@ angular.module('kinoEduApp')
  */
 angular.module('kinoEduApp')
     .controller("LoginController",['BasicAuth','$scope','$rootScope','$http','$location',function(BasicAuth,$scope,$rootScope, $http, $location){
+        $rootScope.currentNavRoute = '/login';
         $scope.isSignup = false;
         $scope.isLogin = true;
         /**
@@ -241,6 +244,7 @@ angular.module('kinoEduApp')
  */
 angular.module('kinoEduApp')
     .controller("LogoutController",['BasicAuth','$scope','$rootScope','$http','$location',function(BasicAuth,$scope,$rootScope, $http, $location){
+        $rootScope.currentNavRoute = '/logout';
         var logOutUrl = '/api/logOut';
         $http.post(logOutUrl)
             .success(function(data, status){
@@ -279,7 +283,8 @@ angular.module('kinoEduApp')
  *  A controller for the create course route
  */
 angular.module('kinoEduApp')
-    .controller("CreateCourseController",['CreateCourseData','ApiCommunicationService','$scope','$location',function(CreateCourseData,ApiCommObj,$scope,$location){
+    .controller("CreateCourseController",['CreateCourseData','ApiCommunicationService','$scope','$location','$rootScope',function(CreateCourseData,ApiCommObj,$scope,$location,$rootScope){
+        $rootScope.currentNavRoute = '/newCourse';
         $scope.courseTitle = CreateCourseData.courseTitle;
         $scope.courseCategoryArr = CreateCourseData.courseCategoryArr;
         $scope.selectedCategory = CreateCourseData.selectedCategory;
@@ -435,7 +440,8 @@ angular.module('kinoEduApp')
  * @todo Functionality is yet to be implemented
  */
 angular.module('kinoEduApp')
-    .controller("ViewCourseController",function($scope,$http){
+    .controller("ViewCourseController",function($scope,$http,$rootScope){
+        $rootScope.currentNavRoute = '/viewCourse';
     });
 
 /**
@@ -443,7 +449,8 @@ angular.module('kinoEduApp')
  * @todo Functionality is yet to be implemented
  */
 angular.module('kinoEduApp')
-    .controller("ContactController",function($scope,$http){
+    .controller("ContactController",function($scope,$http,$rootScope){
+        $rootScope.currentNavRoute = '/contact';
     });
 
 /**
@@ -451,5 +458,6 @@ angular.module('kinoEduApp')
  * @todo Functionality is yet to be implemented
  */
 angular.module('kinoEduApp')
-    .controller("BlogController",function($scope,$http){
+    .controller("BlogController",function($scope,$http,$rootScope){
+        $rootScope.currentNavRoute = '/blog';
     });
