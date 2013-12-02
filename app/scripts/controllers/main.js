@@ -4,7 +4,7 @@
  * Main controller for KinoEdu App. All the app level functionality and variable will be defined here.
  */
 angular.module('kinoEduApp')
-    .controller("AppController",['$window','BasicAuth','$scope','$rootScope','$http','$route','$routeParams','$location','$cookieStore',function($window,BasicAuth,$scope,$rootScope,$http,$route,$routeParams,$location,$cookieStore){
+    .controller("AppController",['$window','$scope','$rootScope','$http','$route','$routeParams','$location','$cookieStore',function($window,$scope,$rootScope,$http,$route,$routeParams,$location,$cookieStore){
         $rootScope.authUserName = '';
         $rootScope.authUserPwd = '';
         $rootScope.currentNavRoute = '/';
@@ -42,9 +42,9 @@ angular.module('kinoEduApp')
         $scope.orderReverse = false;
 
         $scope.init = function() {
-            $rootScope.isAuthUser = false;
-            $rootScope.currentUser = null;
-            ApiCommObj.getData("/api/user/current")
+            /*$rootScope.isAuthUser = false;
+            $rootScope.currentUser = null;*/
+            /*ApiCommObj.getData("/api/user/current")
                 .success(function(data, status, headers, config){
                     console.log('data = ' , data , ', status = ' , status);
                     if(status == 200){
@@ -58,7 +58,7 @@ angular.module('kinoEduApp')
                 .error(function(data){
                     $rootScope.currentUser = null;
                     $rootScope.isAuthUser = false;
-                });
+                });*/
 
         };
         $scope.setGenreFilter = function(genre) {
@@ -85,7 +85,6 @@ angular.module('kinoEduApp')
                 })
             })
             .error(function(data){
-                //error
                 console.log("Error: " + data);
             })
     }]);
@@ -95,7 +94,7 @@ angular.module('kinoEduApp')
  * Controller for the Login and Sign-up route
  */
 angular.module('kinoEduApp')
-    .controller("LoginController",['BasicAuth','ApiCommunicationService','$scope','$rootScope','$http','$location','$window',function(BasicAuth,ApiCommObj,$scope,$rootScope, $http, $location,$window){
+    .controller("LoginController",['ApiCommunicationService','$scope','$rootScope','$http','$location','$window',function(ApiCommObj,$scope,$rootScope, $http, $location,$window){
         $rootScope.currentNavRoute = '/login';
         $scope.isSignup = false;
         $scope.isLogin = true;
@@ -143,14 +142,12 @@ angular.module('kinoEduApp')
                     }
                 })
                 .error(function(data, status, headers, config){
-                    console.log('status >> ' + status);
                     if(404 === status){
                         console.log('Page not found!!!');
                     }
                     else if (status == 400){
                         console.log('validation failed');
                         console.log(data);
-
                         for (var key in data.errors){
                             var err = data.errors[key];
                             if(err.type){
@@ -175,13 +172,12 @@ angular.module('kinoEduApp')
             var userEmail = $scope.userLogEmail;
             var userPassword = $scope.userLogPassword;
 
-            //BasicAuth.setCredentials(userEmail,userPassword);
-
             ApiCommObj.postData(loginUrl,{email:userEmail,password:userPassword})
                 .success(function(data, status, headers, config){
                     if(status == 200){
                         $rootScope.currentUser = data.firstName+" "+data.lastName;
                         $rootScope.isAuthUser = true;
+                        console.log('$rootScope.isAuthUser >>> ',$rootScope.isAuthUser)
                         $location.path('/');
                     }
 
@@ -194,7 +190,6 @@ angular.module('kinoEduApp')
                         $scope.loginMessage = 'Invalid email or password';
                         $rootScope.currentUser = null;
                         $rootScope.isAuthUser = false;
-                        BasicAuth.clearCredentials();
                     }
                 })
         }
@@ -241,16 +236,14 @@ angular.module('kinoEduApp')
  * @todo Integrate the functionality within the login controller itself as there is no need for the Logout route
  */
 angular.module('kinoEduApp')
-    .controller("LogoutController",['BasicAuth','ApiCommunicationService','$scope','$rootScope','$http','$location',function(BasicAuth,ApiCommObj,$scope,$rootScope, $http, $location){
+    .controller("LogoutController",['ApiCommunicationService','$scope','$rootScope','$http','$location',function(ApiCommObj,$scope,$rootScope, $http, $location){
         $rootScope.currentNavRoute = '/logout';
         var logOutUrl = '/api/logOut';
         ApiCommObj.getData(logOutUrl)
             .success(function(data, status){
-                console.log('Logout status >>> ',data,"/",status);
                 if(status == 200){
                     $rootScope.currentUser = null;
                     $rootScope.isAuthUser = false;
-                    BasicAuth.clearCredentials();
                     $location.path('/');
                 }
             })
@@ -262,9 +255,6 @@ angular.module('kinoEduApp')
                 if(status == 401){
 
                 }
-                /*$rootScope.isAuthUser = false;
-                BasicAuth.clearCredentials();
-                $location.path('/');*/
             })
     }]);
 
@@ -302,18 +292,10 @@ angular.module('kinoEduApp')
          $scope.addSection = CreateCourseData.addSection;*/
 
         $scope.addTopic = function($event,sectionId){
-            /* if($event.keyCode == 13){
-             $event.preventDefault();
-             return;
-             }*/
             CreateCourseData.addTopic($event,sectionId);
         }
 
         $scope.addSection = function($event){
-            /*if($event.keyCode == 13){
-             $event.preventDefault();
-             return;
-             }*/
             CreateCourseData.addSection($event);
         }
 
@@ -334,9 +316,6 @@ angular.module('kinoEduApp')
                 $scope.courseTags.splice(key, 1);
             }
         }
-        /*$scope.$watch('courseTitle',function(courseTitle){
-         CreateCourseData.courseTitle = courseTitle;
-         })*/
 
         $scope.$watchCollection('[courseTitle,courseCategoryArr,selectedCategory,courseLevelArr,selectedLevel,courseSummary,courseDetails,coursePromoVideo,courseAuthor,courseKeyword,sectionData]',function(watchValArr){
             CreateCourseData.courseTitle = watchValArr[0];
@@ -377,7 +356,6 @@ angular.module('kinoEduApp')
                     if(status == 200){
                         console.log('The course with following data is created!!!\n',data);
                     }
-                    console.log('I am called!!!')
                     $scope.resetCourseForm();
                     $location.path('/viewCourse');
                 })
@@ -462,8 +440,6 @@ angular.module('kinoEduApp')
         $scope.sendEmailToForgotPass = function(){
 
             var userEmail = $scope.userEmail;
-            console.log(userEmail);
-
             var ForgotPassObj = {
                 email:userEmail
             }
@@ -473,15 +449,12 @@ angular.module('kinoEduApp')
 
             ApiCommObj.postData('/api/users/forgotPass',ForgotPassObj)
                 .success(function(data, status, headers, config){
-                    console.log('Data >> ',data);
-                    console.log('Status >> ',status)
                     if(status == 200){
                         $scope.message = 'Email has been sent with reset password.'
                     }
 
                 })
                 .error(function(data, status, headers, config){
-                    console.log('Status >> ',status);
                     if(404 === status){
                         console.log('Page not found!!!');
                     }
@@ -508,8 +481,6 @@ angular.module('kinoEduApp')
              * validate new and confirm password
              * */
 
-            console.log(currentPassword + ' ' + newPassword + ' ' + confirmPassword);
-
             var changePassObj = {
                 currentPass : currentPassword,
                 newPass : newPassword
@@ -520,12 +491,9 @@ angular.module('kinoEduApp')
 
             ApiCommObj.postData('/api/users/changePass',changePassObj)
                 .success(function(data, status, headers, config){
-                    console.log('Data >> ',data);
-                    console.log('Status >> ',status)
                     if(status == 200){
                         $scope.message = 'Password changed successfully.'
                     }
-
                 })
                 .error(function(data, status, headers, config){
                     console.log('Status >> ',status);

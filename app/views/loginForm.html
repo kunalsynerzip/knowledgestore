@@ -88,18 +88,18 @@
                        <a href="/forgotPassword">Forgot Password?</a>
                     </div>
                 </fieldset>
-                    <ul class="social-login">
-                        <li>
-                            <a href="/fbLogin" ng-click="fbLogin()">Login with Facebook</a>
-                        </li>
-                        <li>
-                            <a href="/githubLogin" ng-click="githubLogin()">Login with Github</a>
-                        </li>
-                        <li>
-                            <a href="/googleLogin" ng-click="googleLogin()">Login with Google</a>
-                        </li>
-                    </ul>
-                </fieldset>
+                <div class="text-center text-muted loginSeparator">OR</div>
+                <ul class="social-login">
+                    <li>
+                        <a href="/fbLogin" ng-click="fbLogin()">Login with Facebook</a>
+                    </li>
+                    <li>
+                        <a href="/githubLogin" ng-click="githubLogin()">Login with Github</a>
+                    </li>
+                    <li>
+                        <a href="/googleLogin" ng-click="googleLogin()">Login with Google</a>
+                    </li>
+                </ul>
                 <!-- Error message -->
                 <div class="alert alert-danger" style="margin-top: 10px;" ng-show="loginMessage">{{loginMessage}}</div>
             </form>

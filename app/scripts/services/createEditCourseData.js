@@ -60,7 +60,6 @@ angular.module('kinoEduServices')
         };
 
         var addTopic = function($event,sectionId){
-            console.log('Keycode value is >>> ',$event.keyCode)
             if($event.keyCode == 13){
                 $event.preventDefault();
                 return;

@@ -5020,6 +5020,10 @@ h1, h2, h3 {
 .show-info span.label {
   display: inline-block !important; }
 
+.loginSeparator {
+  font-weight: bold;
+  font-size: 36px; }
+
 .social-login a {
   height: 50px;
   font-size: 20px; }
