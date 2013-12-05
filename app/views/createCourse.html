@@ -52,9 +52,9 @@
                                 {{ tag.name }}
                                 <div class="delete-tag" ng-click="deleteTag(key)">&times;</div>
                             </div>
-                            <input required tag-input ng-model="courseKeyword" new-tag="addTag()" delete-tag="deleteTag()" type="text" class="form-control" id="courseKeyword" placeholder="Please enter keyword(s) for course" name="courseKeyword">
+                            <input ng-required="courseTags.length === 0" tag-input ng-model="courseKeyword" new-tag="addTag()" delete-tag="deleteTag()" type="text" class="form-control" id="courseKeyword" placeholder="Please enter keyword(s) for course" name="courseKeyword">
                             <div ng-show="createCourseForm.courseKeyword.$dirty && createCourseForm.courseKeyword.$invalid">
-                                <span ng-show="createCourseForm.courseKeyword.$error.required && courseTags.length === 0">Course keywords are mandatory.</span>
+                                <span ng-show="createCourseForm.courseKeyword.$error.required">Course keywords are mandatory.</span>
                             </div>
                         </div>
                     </div>

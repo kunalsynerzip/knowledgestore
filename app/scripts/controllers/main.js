@@ -5,9 +5,9 @@
  */
 angular.module('kinoEduApp')
     .controller("AppController",['$window','$scope','$rootScope','$http','$route','$routeParams','$location','$cookieStore',function($window,$scope,$rootScope,$http,$route,$routeParams,$location,$cookieStore){
-        $rootScope.authUserName = '';
-        $rootScope.authUserPwd = '';
         $rootScope.currentNavRoute = '/';
+        $rootScope.isAuthUser = false;
+        $rootScope.currentUser = null;
 
         if($cookieStore.get('authData')){
             $rootScope.isAuthUser = true;
@@ -44,22 +44,6 @@ angular.module('kinoEduApp')
         $scope.init = function() {
             /*$rootScope.isAuthUser = false;
             $rootScope.currentUser = null;*/
-            /*ApiCommObj.getData("/api/user/current")
-                .success(function(data, status, headers, config){
-                    console.log('data = ' , data , ', status = ' , status);
-                    if(status == 200){
-                        $rootScope.currentUser = data.firstName + " " + data.lastName;
-                        $rootScope.isAuthUser = true;
-                    } else if(status == 401){
-                        $rootScope.currentUser = null;
-                        $rootScope.isAuthUser = false;
-                    }
-                })
-                .error(function(data){
-                    $rootScope.currentUser = null;
-                    $rootScope.isAuthUser = false;
-                });*/
-
         };
         $scope.setGenreFilter = function(genre) {
             $scope.genreFilter = genre;
@@ -94,7 +78,7 @@ angular.module('kinoEduApp')
  * Controller for the Login and Sign-up route
  */
 angular.module('kinoEduApp')
-    .controller("LoginController",['ApiCommunicationService','$scope','$rootScope','$http','$location','$window',function(ApiCommObj,$scope,$rootScope, $http, $location,$window){
+    .controller("LoginController",['ApiCommunicationService','AuthService','$scope','$rootScope','$http','$location','$window',function(ApiCommObj,AuthService,$scope,$rootScope, $http, $location,$window){
         $rootScope.currentNavRoute = '/login';
         $scope.isSignup = false;
         $scope.isLogin = true;
@@ -178,6 +162,7 @@ angular.module('kinoEduApp')
                         $rootScope.currentUser = data.firstName+" "+data.lastName;
                         $rootScope.isAuthUser = true;
                         console.log('$rootScope.isAuthUser >>> ',$rootScope.isAuthUser)
+                        AuthService.loginConfirmed(data,config);
                         $location.path('/');
                     }
 

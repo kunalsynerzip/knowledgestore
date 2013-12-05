@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="bower_components/bootstrap-sass/dist/css/bootstrap-theme.min.css">-->
     <!-- endbuild -->
 </head>
-  <body ng-app="kinoEduApp" ng-controller="AppController">
+  <body ng-app="kinoEduApp" ng-controller="AppController" auth-user>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -43,13 +43,14 @@
                     <div class = "collapse navbar-collapse navHeaderCollapse" ng-controller="NavbarController">
                         <ul class = "nav navbar-nav navbar-right" ng-switch="isAuthUser">
                             <!--<li ng-class = "{ active: isActive('/')}"><a href = "/">Courses</a></li>-->
-                            <li ng-class = "{active: isActive('/') || isActive('/newCourse')}">
+                            <li ng-switch-when="true" ng-class = "{active: isActive('/') || isActive('/newCourse')}">
                                 <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Courses <b class = "caret"></b></a>
                                 <ul class = "dropdown-menu">
                                     <li><a href = "/">Courses</a></li>
                                     <li><a href = "/newCourse">Create Course</a></li>
                                 </ul>
                             </li>
+                            <li ng-switch-default ng-class = "{ active: isActive('/')}"><a href = "/">Courses</a></li>
                             <li ng-class = "{ active: isActive('/blog')}"><a href = "/blog">Blog</a></li>
                             <!--<li class = "dropdown">
                                 <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Social Media <b class = "caret"></b></a>
@@ -84,6 +85,7 @@
     <!-- Build:js scripts/libraries.js -->
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="scripts/libs/http-auth-interceptor.js"></script>
 
     <!-- Build:js scripts/plugins.js -->
     <script src="bower_components/bootstrap-sass/dist/js/bootstrap.min.js"></script>
@@ -108,6 +110,7 @@
     <script src="scripts/directives/confirmPassword.js"></script>
     <script src="scripts/directives/tags.js"></script>
     <script src="scripts/directives/videoUrlValidator.js"></script>
+    <script src="scripts/directives/userAuthentication.js"></script>
 
     <!-- Services, Factory and Provider -->
     <script src="scripts/services/base64.js"></script>
