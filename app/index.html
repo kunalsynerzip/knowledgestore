@@ -10,11 +10,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
-    <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <!--<link rel="stylesheet" href="bower_components/bootstrap-sass/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bower_components/bootstrap-sass/dist/css/bootstrap-theme.min.css">-->
     <!-- endbuild -->
 </head>
   <body ng-app="kinoEduApp" ng-controller="AppController" auth-user>
@@ -42,7 +38,6 @@
 
                     <div class = "collapse navbar-collapse navHeaderCollapse" ng-controller="NavbarController">
                         <ul class = "nav navbar-nav navbar-right" ng-switch="isAuthUser">
-                            <!--<li ng-class = "{ active: isActive('/')}"><a href = "/">Courses</a></li>-->
                             <li ng-switch-when="true" ng-class = "{active: isActive('/') || isActive('/newCourse')}">
                                 <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Courses <b class = "caret"></b></a>
                                 <ul class = "dropdown-menu">
@@ -52,15 +47,6 @@
                             </li>
                             <li ng-switch-default ng-class = "{ active: isActive('/')}"><a href = "/">Courses</a></li>
                             <li ng-class = "{ active: isActive('/blog')}"><a href = "/blog">Blog</a></li>
-                            <!--<li class = "dropdown">
-                                <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Social Media <b class = "caret"></b></a>
-                                <ul class = "dropdown-menu">
-                                    <li><a href = "#">Twitter</a></li>
-                                    <li><a href = "#">Facebook</a></li>
-                                    <li><a href = "#">Google+</a></li>
-                                    <li><a href = "#">Instagram</a></li>
-                                </ul>
-                            </li>-->
                             <li ng-class="{ active: isActive('/contact')}"><a href = "/contact">Contact Us</a></li>
                             <li ng-switch-when="true" ng-class="{ active: isActive('/login')}"><a  href="/logout">Logout</a></li>
                             <li ng-switch-default ng-class="{ active: isActive('/login')}"><a  href="/login">Login</a></li>
@@ -86,8 +72,6 @@
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="scripts/libs/http-auth-interceptor.js"></script>
-
-    <!-- Build:js scripts/plugins.js -->
     <script src="bower_components/bootstrap-sass/dist/js/bootstrap.min.js"></script>
     <!-- End build -->
 
@@ -117,7 +101,6 @@
     <script src="scripts/services/basicAuthentication.js"></script>
     <script src="scripts/services/createEditCourseData.js"></script>
     <script src="scripts/services/apiCommunicationService.js"></script>
-
     <!-- End build -->
 </body>
 </html>
